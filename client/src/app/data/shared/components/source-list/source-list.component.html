@@ -1,0 +1,37 @@
+<table class="pure-table lab-table">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Color</th>
+			<th>Convertor</th>
+			<th>Formatter</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let dataset of datasets$ | async">
+			<td>{{dataset.index}}</td>
+			<td>{{dataset.name}}</td>
+			<td>
+				<input [(colorPicker)]="dataset.color"
+					[cpOKButton]="true"
+					[style.background]="dataset.color"
+					[cpSaveClickOutside]="false"
+					(colorPickerSelect)="changeSettings(dataset)" />
+			</td>
+			<td>
+				<select [(ngModel)]="dataset.convertionType" (change)="changeSettings(dataset)">
+					<option *ngFor="let convertor of convertors" [ngValue]="convertor.type">{{convertor.name}}</option>
+				</select>				
+			</td>
+			<td>
+				<select [(ngModel)]="dataset.formatterCode" (change)="changeSettings(dataset)">
+					<option *ngFor="let formatter of formatters" [ngValue]="formatter.code">{{formatter.name}}</option>
+				</select>
+			</td>
+			<td>{{dataset.data$ | async | formatSourceValue:dataset.convertionType:dataset.formatterCode}}</td>
+		</tr>
+	</tbody>
+</table>
+

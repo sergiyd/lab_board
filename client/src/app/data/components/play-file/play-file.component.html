@@ -1,0 +1,33 @@
+<ng-container *ngIf="loaded$ | async">
+	<app-chart [datasets$]="chartDatasets$" [stepMs]="chartStepMs" [deepMs]="chartDeepMs"></app-chart>
+	<div class="pure-form pure-form-aligned">	
+		<div class="pure-control-group">
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionBegin)" value="Begin" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayForward" (click)="playerAction(playerActionPlayForward)" value="Forward" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionStop)" value="Stop" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayBackward" (click)="playerAction(playerActionPlayBackward)" value="Backrward" />
+			<input class="pure-button pure-button-primary" type="button" (click)="playerAction(playerActionEnd)" value="End" />
+			<!-- <span class="lab-period">Period (board/instant): {{syncInterval}}/{{(instantSyncInterval$ | async) || '-'}}ms</span> -->
+		</div>
+		<div class="pure-control-group">
+			<label for="position">Position</label>
+			<input id="position" type="text" [(ngModel)]="position" />
+		</div>
+	</div>
+	<app-source-list [datasets$]="datasets$"></app-source-list>	
+</ng-container>
+<ng-container *ngIf="!(loaded$ | async)">
+	<div class="lab-div-tmargin">
+		<div class="lab-div-loading">
+			<span>Loading file <strong>{{name}}</strong>...</span>
+		</div>
+		<div class="lab-div-loading">
+			<span>{{((downloadProgress$ | async)?.percents | number:'1.0-0') || '?'}}%</span>
+			&nbsp;
+			<span>({{((downloadProgress$ | async)?.loaded / 1024) | number:'1.1-2'}}kb / {{((downloadProgress$ | async)?.total / 1024 | number:'1.1-2') || '?'}}kb</span>
+		</div>		
+		<div class="lab-div-loading">
+			<img src="assets/img/loading.gif" alt="Loading">
+		</div>
+	</div>
+</ng-container>

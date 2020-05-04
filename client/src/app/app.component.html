@@ -1,0 +1,25 @@
+<div class="pure-menu pure-menu-horizontal">
+	<a routerLink="" [routerLinkActive]="['pure-menu-selected']" class="pure-menu-heading pure-menu-link">{{title}}</a>
+	<ul class="pure-menu-list">
+		<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover" [routerLinkActive]="['pure-menu-selected']">
+			<span class="pure-menu-link">Management</span>
+			<ul class="pure-menu-children">
+				<li class="pure-menu-item"><a routerLink="./management/console" class="pure-menu-link">Console</a></li>
+				<li class="pure-menu-item"><a routerLink="./management/register" class="pure-menu-link">Register</a></li>
+			</ul>			
+		</li>
+		<li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover" [routerLinkActive]="['pure-menu-selected']">
+			<a routerLink="./data" class="pure-menu-link">Data</a>
+			<ul class="pure-menu-children">
+				<li class="pure-menu-item"><a routerLink="./data/live" class="pure-menu-link">Live</a></li>
+				<li class="pure-menu-item"><a routerLink="./data/files" class="pure-menu-link">Files</a></li>
+			</ul>
+		</li>
+	</ul>
+	<span class="lab-nav-status">
+		<input class="pure-button pure-button-primary" type="button" [disabled]="!online" (click)="captureButtonClick()" value="{{captureButtonText}}" />
+		{{boardConnectionStatus}}::{{boardStateDescription}}
+		<input class="pure-button lab-btn-connect" type="button" (click)="connectionButtonClick()" value="{{connectionButtonText}}" />
+	</span>
+</div>
+<router-outlet></router-outlet>

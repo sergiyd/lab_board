@@ -1,0 +1,13 @@
+@import '../node_modules/purecss/build/pure-min.css';
+
+.lab-app-container {
+  display: flex;
+  align-items: center;
+	justify-content: center;
+}
+.lab-app-sub-container {
+  width: 1024px;
+}
+.lab-table {
+	width: 1024px;
+}

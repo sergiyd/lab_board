@@ -1,0 +1,5 @@
+<app-chart [datasets$]="chartDatasets$" [stepMs]="chartStepMs" [deepMs]="chartDeepMs"></app-chart>
+<input class="pure-button pure-button-primary" type="button" [disabled]="!fetching && !(canFetch$ | async)"
+	(click)="fetchButtonClick()" value="{{fetchButtonText}}" />
+<span class="lab-period">Period (board/instant): {{syncInterval}}/{{(instantSyncInterval$ | async) || '-'}}ms</span>
+<app-source-list [datasets$]="datasets$" (changeDatasetSettings)="changeDatasetSettings($event)"></app-source-list>

@@ -1,0 +1,50 @@
+<div class="pure-form pure-form-aligned">
+	<fieldset>
+		<legend>Search devices</legend>
+
+		<div class="pure-control-group">
+			<label for="bus">Bus</label>
+			<select [(ngModel)]="bus" name="bus">
+				<option *ngFor="let busItem of busItems" [ngValue]="busItem.bus">{{busItem.name}}</option>
+			</select>
+		</div>
+	</fieldset>
+</div>
+
+<button (click)="search()" id="bSearch" class="pure-button" [disabled]="!(idleMode$ | async)">Search</button>
+
+<table class="pure-table lab-table">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Type</th>
+			<th>Address</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<ng-container *ngFor="let device of devices$ | async">
+			<tr *ngIf="device.loading">
+				<td colspan="4" class="lab-td-retrieving">
+					<span>Retrieving </span><img src="assets/img/loading.gif" alt="Loading">
+				</td>
+			</tr>
+			<tr *ngIf="!device.loading">
+				<td>
+					#{{device.index}}
+				</td>
+				<td>
+					{{device.typeName}}
+				</td>
+				<td>
+					{{device.addressHex}}
+				</td>
+				<td>
+					<button *ngIf="!device.registered" class="pure-button" [disabled]="!device.canRegister"
+						(click)="populate(device)">Populate</button>
+					<span *ngIf="device.registered">registered</span>
+				</td>
+			</tr>
+		</ng-container>
+	</tbody>
+</table>
