@@ -945,7 +945,7 @@ void setSystemState(uint8_t state)
 		fsDataFile = SD.open(fileName, 0x10 | 0x02);
 		delete fileName;
 
-		fsDataFile.printf_P(PSTR("{\"started\":\"%d\",\"period\":\"%d\","), lastStateTimestamp, INTERLOOP_DELAY_CAPTURING);
+		fsDataFile.printf_P(PSTR("{\"started\":%d,\"period\":%d,"), lastStateTimestamp, INTERLOOP_DELAY_CAPTURING);
 		fsDataFile.print(F("\"devices\":["));
 
 		uint8_t addressLength;
@@ -1010,7 +1010,7 @@ void setSystemState(uint8_t state)
 			}
 		}
 
-		fsDataFile.printf_P(PSTR("],\"finished\":\"%d\"}"), lastStateTimestamp);
+		fsDataFile.printf_P(PSTR("],\"finished\":%d}"), lastStateTimestamp);
 		fsDataFile.flush();
 		fsDataFile.close();
 	}
