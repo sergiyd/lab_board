@@ -151,7 +151,12 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 
 	private get maxPosition(): number {
 		const data = this._fileData.data;
-		return data?.length && data[data.length - 1].t - this._fileData.started - chartDeepMs;
+		if (data?.length) {
+			const rawMaxPosition = data[data.length - 1].t - this._fileData.started;
+			return Math.round(rawMaxPosition / this.chartStepMs) * this.chartStepMs;
+		} else {
+			return 0;
+		}
 	}
 
 	public get position(): number {
@@ -159,9 +164,8 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	}
 
 	public set position(rawPosition: number) {
-		const started = this._fileData.started;
-		const position = Math.min(rawPosition, this.maxPosition);
-		this._position = position - (position % this.chartStepMs);
+		const started = this._fileData.data[0].t;
+		this._position = Math.min(rawPosition, this.maxPosition);
 
 		// Clear values
 		Array
@@ -169,14 +173,19 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 			.forEach(deviceIndex => this._chartDataMatix.get(deviceIndex).fill(undefined));
 
 		let matrixIndex = 0;
+		const matrixMaxIndex = (chartDeepMs / this.chartStepMs) - 1;
 		for (const record of this._fileData.data) {
-			if (record.t - started >= this._position + chartDeepMs) {
-				// Record is beyond the time bounds
+			const recordTime = record.t - started;
+			if (recordTime > this._position) {
+				// Record is beyond the highest time bound
 				break;
-			} else if (record.t - started >= this._position) {
-				matrixIndex = (record.t - started - this._position) / this.chartStepMs;
+			} else if (recordTime < this._position - chartDeepMs) {
+				// Record is beyond the lowest time bound
+				continue;
+			} else if (recordTime <= this._position) {
+				matrixIndex = matrixMaxIndex - ((this._position - recordTime) / this.chartStepMs);
 
-				if (Math.abs(record.t - started - this._position) < this.chartStepMs) {
+				if (Math.abs(recordTime - this._position) < this.chartStepMs) {
 					this
 						._sourceDataSubject
 						.next(new SourcesSync(record.t, record.d.map(d => new SourceData(d.i, d.f, new Uint8Array(d.v).buffer))));
@@ -196,7 +205,6 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 					data: this
 						._chartDataMatix
 						.get(dataset.index)
-						.reverse()
 						.map(values => {
 							const dataView = values && new DataView(new Uint8Array(values).buffer);
 							return DataConvertorService.convertNumber(dataView, dataset.convertionType, dataset.formatterCode);
