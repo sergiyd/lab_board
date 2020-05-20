@@ -12,6 +12,7 @@
 		<div class="pure-control-group">
 			<label for="position">Position</label>
 			<input id="position" type="text" [(ngModel)]="position" />
+			<span style="margin-left: 10px;">/ {{maxPosition}}</span>
 		</div>
 	</div>
 	<app-source-list [datasets$]="datasets$"></app-source-list>	

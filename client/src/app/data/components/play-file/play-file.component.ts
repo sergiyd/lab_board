@@ -149,7 +149,7 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 		this.position = 0;
 	}
 
-	private get maxPosition(): number {
+	public get maxPosition(): number {
 		const data = this._fileData.data;
 		if (data?.length) {
 			const rawMaxPosition = data[data.length - 1].t - this._fileData.started;
