@@ -3,16 +3,18 @@
 	<div class="pure-form pure-form-aligned">	
 		<div class="pure-control-group">
 			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionBegin)" value="Begin" />
-			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayForward" (click)="playerAction(playerActionPlayForward)" value="Forward" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayForward" (click)="playerAction(playerActionPlayForward)" value="Play Forward" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionStepForward)" value="Step Forward" />
 			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionStop)" value="Stop" />
-			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayBackward" (click)="playerAction(playerActionPlayBackward)" value="Backrward" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" [disabled]="(playerAction$ | async) === playerActionPlayBackward" (click)="playerAction(playerActionPlayBackward)" value="Play Backrward" />
+			<input class="pure-button pure-button-primary lab-btn-player" type="button" (click)="playerAction(playerActionStepBackward)" value="Step Backrward" />
 			<input class="pure-button pure-button-primary" type="button" (click)="playerAction(playerActionEnd)" value="End" />
 			<!-- <span class="lab-period">Period (board/instant): {{syncInterval}}/{{(instantSyncInterval$ | async) || '-'}}ms</span> -->
 		</div>
 		<div class="pure-control-group">
 			<label for="position">Position</label>
 			<input id="position" type="text" [(ngModel)]="position" />
-			<span style="margin-left: 10px;">/ {{maxPosition}}</span>
+			<span class="lab-span-lmargin">/ {{maxPosition}}</span>
 		</div>
 	</div>
 	<app-source-list [datasets$]="datasets$"></app-source-list>	

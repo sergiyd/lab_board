@@ -29,7 +29,9 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	private readonly _playerActionSubject = new Subject<PlayerAction>();
 	public readonly playerActionBegin = PlayerAction.Begin;
 	public readonly playerActionPlayForward = PlayerAction.PlayForward;
+	public readonly playerActionStepForward = PlayerAction.StepForward;
 	public readonly playerActionPlayBackward = PlayerAction.PlayBackward;
+	public readonly playerActionStepBackward = PlayerAction.StepBackward;
 	public readonly playerActionEnd = PlayerAction.End;
 	public readonly playerActionStop = PlayerAction.Stop;
 	private readonly _unsubscribe = new Subject();
@@ -73,21 +75,27 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 					case PlayerAction.PlayBackward:
 						interval(this.chartStepMs)
 							.pipe(takeUntil(this._unsubscribe), takeUntil(this._playerActionSubject))
-							.subscribe(() => {
-								const nextPosition = this.position + this.chartStepMs * (action === PlayerAction.PlayBackward ? -1 : 1);
-
-								if (nextPosition < 0 || nextPosition > this.maxPosition) {
-									this._playerActionSubject.next();
-								} else {
-									this.position = nextPosition;
-								}
-							});
+							.subscribe(() => this.step(action === PlayerAction.PlayForward));
+						return;
+					case PlayerAction.StepForward:
+					case PlayerAction.StepBackward:
+						this.step(action === PlayerAction.StepForward);
 						return;
 					case PlayerAction.End:
 						this.position = this.maxPosition;
 						return;
 				}
 			});
+	}
+
+	private step(forward: boolean): void {
+		const nextPosition = this.position + this.chartStepMs * (forward ? 1 : -1);
+
+		if (nextPosition < 0 || nextPosition > this.maxPosition) {
+			this._playerActionSubject.next();
+		} else {
+			this.position = nextPosition;
+		}
 	}
 
 	public ngOnDestroy(): void {
@@ -264,7 +272,9 @@ class DownloadProgress {
 enum PlayerAction {
 	Begin,
 	PlayForward,
+	StepForward,
 	PlayBackward,
+	StepBackward,
 	End,
 	Stop
 }
