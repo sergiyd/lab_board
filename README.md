@@ -1,3 +1,4 @@
+Prepare Arduino CLI environment
 ```sh
 arduino-cli lib update-index
 arduino-cli lib install DallasTemperature
