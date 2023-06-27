@@ -1156,6 +1156,17 @@ void setupWebServer()
                { webServer.send_P(200, (const char *)&ContentTypeTextHtml, (const char *)&UploadHtml); });
 
   webServer.on(
+      "/files", HTTP_DELETE,
+      []() {
+        Dir dir = SPIFFS.openDir("");
+        while (dir.next())
+        {
+          SPIFFS.remove(dir.fileName());
+        }
+        webServer.send(200);
+      });
+
+  webServer.on(
       "/upload", HTTP_POST, []()
       { webServer.send(200); },
       handleWebServerUpload);
