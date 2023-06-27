@@ -192,8 +192,8 @@ export class DataConvertorService {
 	private static readonly convertors: ReadonlyMap<ConvertionTypes, ConvertorBase> = new Map<ConvertionTypes, ConvertorBase>([
 		[ConvertionTypes.Integer, new IntegerConvertor()],
 		[ConvertionTypes.Float, new FloatConvertor()],
-		[ConvertionTypes.Ds18, new Ds18Convertor()],
 		[ConvertionTypes.SystemTemperature, new SystemTemperatureConvertor()],
+		[ConvertionTypes.Ds18, new Ds18Convertor()],
 		[ConvertionTypes.Acs712A05, new Acs712A05Convertor()],
 		[ConvertionTypes.Acs712A20, new Acs712A20Convertor()],
 		[ConvertionTypes.Acs712A30, new Acs712A30Convertor()],
