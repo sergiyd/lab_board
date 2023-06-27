@@ -38,6 +38,15 @@ class Ds18Convertor extends ConvertorBase {
 	}
 }
 
+class SystemTemperatureConvertor extends ConvertorBase {
+	constructor() {
+		super(ConvertionTypes.SystemTemperature, 'Sys. Temp.');
+	}
+	public convert(data: DataView): number {
+		return data.getInt16(0, true) / 100;
+	}
+}
+
 class Ds3231Convertor extends ConvertorBase {
 	constructor() {
 		super(ConvertionTypes.Ds3231, 'DS3231');
@@ -184,6 +193,7 @@ export class DataConvertorService {
 		[ConvertionTypes.Integer, new IntegerConvertor()],
 		[ConvertionTypes.Float, new FloatConvertor()],
 		[ConvertionTypes.Ds18, new Ds18Convertor()],
+		[ConvertionTypes.SystemTemperature, new SystemTemperatureConvertor()],
 		[ConvertionTypes.Acs712A05, new Acs712A05Convertor()],
 		[ConvertionTypes.Acs712A20, new Acs712A20Convertor()],
 		[ConvertionTypes.Acs712A30, new Acs712A30Convertor()],
