@@ -844,6 +844,22 @@ void handleSerial()
     Serial.printf_P(PSTR("Environment temp.: %4.2fC\r\n"), temp / 100.0f);
   }
 #ifdef DEBUG
+  else if (command == "subscribers")
+  {
+    Serial.println(F("Subscribers:"));    
+    for (uint8_t subject = 0; subject < sizeof(subscribers) / sizeof(subscribers_t); subject++)
+    {
+      Serial.printf_P(PSTR("#%d:"), subject);    
+      for (uint8_t clientIndex = 0; clientIndex < sizeof(subscribers_t); clientIndex++)
+      {       
+        if (subscribers[subject][clientIndex])
+        {
+          Serial.printf_P(PSTR(" %d"), subject);
+        }
+      }
+      Serial.println();
+    }
+  }
   else if (command == "set_system_state")
   {
     uint8_t newState;
@@ -1157,7 +1173,8 @@ void setupWebServer()
 
   webServer.on(
       "/files", HTTP_DELETE,
-      []() {
+      []()
+      {
         Dir dir = SPIFFS.openDir("");
         while (dir.next())
         {
