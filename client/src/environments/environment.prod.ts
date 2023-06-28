@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	wsUrl: '',
+  wsUrl: '',  
 	reconnectTimeoutMs: 5000,
 	reconnectAttempts: 3
 };

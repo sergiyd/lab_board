@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-	wsUrl: 'ws://192.168.50.110:81',
+  wsUrl: '',
 	reconnectTimeoutMs: 5000,
 	reconnectAttempts: 3
 };
