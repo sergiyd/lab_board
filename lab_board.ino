@@ -93,6 +93,7 @@
 #define MSG_CMD_MANAGEMENT_ALL_DEVICES_COUNT 7
 #define MSG_CMD_MANAGEMENT_DEVICE 8
 #define MSG_CMD_MANAGEMENT_DEVICE_VALUE 9
+#define MSG_CMD_MANAGEMENT_MUTE_DEVICE 10
 
 #define MSG_CMD_MONITORING_SOURCES_COUNT 1
 #define MSG_CMD_MONITORING_SOURCE 2
@@ -123,6 +124,7 @@
 #define DEVICE_FLAG_SYSTEM 1
 #define DEVICE_FLAG_OUTPUT 2
 #define DEVICE_FLAG_ENABLED 4
+#define DEVICE_FLAG_MUTED 8
 #define DEVICE_FLAG_NO_DATA 16
 #define DEVICE_FLAG_SYNC 32
 #define DEVICE_FLAG_ACTIVE 64
@@ -1069,7 +1071,7 @@ void sendSourceData(uint8_t number, uint32_t timestamp, uint8_t index)
   for (uint8_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
   {
     device = devices[deviceIndex];
-    if (!(device->flags & DEVICE_FLAG_ENABLED) || (device->flags & DEVICE_FLAG_NO_DATA) || !((device->flags & DEVICE_FLAG_SYNC) || deviceIndex == index))
+    if (!(device->flags & DEVICE_FLAG_ENABLED) || (device->flags & (DEVICE_FLAG_NO_DATA | DEVICE_FLAG_MUTED)) || !((device->flags & DEVICE_FLAG_SYNC) || deviceIndex == index))
     {
       continue;
     }
@@ -1433,6 +1435,23 @@ void handleManagementSubject(const message_in_t *message)
     break;
   case MSG_CMD_MANAGEMENT_SWITCH_DEVICE:
     deviceIndex = message->data[0];
+    device = devices[deviceIndex];
+
+    if (message->data[1])
+    {
+      device->flags |= DEVICE_FLAG_MUTED;
+    }
+    else
+    {
+      device->flags &= 0xFF ^ DEVICE_FLAG_MUTED;
+    }
+
+    messageOut->data[0] = deviceIndex;
+    messageOut->data[1] = message->data[1];
+    sendBin(WEB_SOCKET_NUMBER_BROADCAST_MANAGEMENT, subjectCommandLength + (sizeof(uint8_t) * 2));
+    break;
+  case MSG_CMD_MANAGEMENT_MUTE_DEVICE:
+    deviceIndex = message->data[0];
 
     if (!isDeviceEditable(deviceIndex))
     {
@@ -1661,7 +1680,7 @@ void handleMonitoringSubject(const message_in_t *message)
     }
     device = devices[deviceIndex];
     messageOut->data[0] = deviceIndex;
-    messageOut->data[1] = device->flags & DEVICE_FLAG_OUTPUT ? 1 : 0;
+    messageOut->data[1] = device->flags & (DEVICE_FLAG_OUTPUT | DEVICE_FLAG_MUTED);
     messageOut->data[2] = DEVICE_EXTRA_LENGTH;
     memcpy(&messageOut->data[3], device->extra, DEVICE_EXTRA_LENGTH);
     messageOut->data[3 + messageOut->data[2]] = strlen(device->name);
@@ -1985,7 +2004,7 @@ void readInputs()
   for (uint8_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
   {
     device = devices[deviceIndex];
-    if (!(device->flags & DEVICE_FLAG_ENABLED) || (device->flags & DEVICE_FLAG_NO_DATA))
+    if (!(device->flags & DEVICE_FLAG_ENABLED) || (device->flags & (DEVICE_FLAG_NO_DATA | DEVICE_FLAG_MUTED)))
     {
       continue;
     }
