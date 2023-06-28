@@ -11,3 +11,7 @@
 .lab-table {
 	width: 1024px;
 }
+.lab-app-loading {
+  margin-top: 20px;
+  text-align: center;
+}
