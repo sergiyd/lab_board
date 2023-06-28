@@ -1434,6 +1434,11 @@ void handleManagementSubject(const message_in_t *message)
             subjectCommandLength + (sizeof(uint8_t) * 6) + messageOut->data[4] + messageOut->data[5 + messageOut->data[4]]);
     break;
   case MSG_CMD_MANAGEMENT_SWITCH_DEVICE:
+    if (systemState == SYSTEM_STATE_CAPTURING)
+    {
+      break;
+    }
+
     deviceIndex = message->data[0];
 
     if (!isDeviceEditable(deviceIndex))
@@ -1518,12 +1523,24 @@ void handleManagementSubject(const message_in_t *message)
     sendBin(message->number, subjectCommandLength + (sizeof(uint8_t) * 5) + messageOut->data[4]);
     break;
   case MSG_CMD_MANAGEMENT_REGISTER_DEVICE:
+    if (systemState == SYSTEM_STATE_CAPTURING)
+    {
+      break;
+    }  
     registerDevice(message->data, message->length);
     break;
   case MSG_CMD_MANAGEMENT_UNREGISTER_DEVICE:
+    if (systemState == SYSTEM_STATE_CAPTURING)
+    {
+      break;
+    }
     unregisterDevice(message->data[0]);
     break;
   case MSG_CMD_MANAGEMENT_RENAME_DEVICE:
+    if (systemState == SYSTEM_STATE_CAPTURING)
+    {
+      break;
+    }
     break;
   }
 }
@@ -1611,7 +1628,11 @@ void handleMonitoringSubject(const message_in_t *message)
   if (message->command == MSG_CMD_MONITORING_PUT_EXTRA ||
     message->command == MSG_CMD_MONITORING_MUTE)
   {
-    // Update devices + flash
+    if (systemState == SYSTEM_STATE_CAPTURING)
+    {
+      return;
+    }
+
     deviceIndex = message->data[0];
     if (deviceIndex >= deviceCount)
     {
