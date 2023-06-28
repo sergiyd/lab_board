@@ -3,14 +3,17 @@
 .lab-app-container {
   display: flex;
   align-items: center;
-	justify-content: center;
+  justify-content: center;
 }
+
 .lab-app-sub-container {
   width: 1024px;
 }
+
 .lab-table {
-	width: 1024px;
+  width: 1024px;
 }
+
 .lab-app-loading {
   margin-top: 20px;
   text-align: center;

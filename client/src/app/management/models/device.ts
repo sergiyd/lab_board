@@ -12,5 +12,6 @@ export class Device {
 		public readonly system: boolean,
 		public readonly direction: DeviceDirection,
 		public readonly enabled: boolean,
+		public readonly muted: boolean,
 		public readonly address: ReadonlyArray<number>) { }
 }

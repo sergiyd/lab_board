@@ -18,7 +18,7 @@ import { DeviceDecoratorService } from './device-decorator.service';
 	providedIn: 'root'
 })
 export class ManagementConsoleService extends BoardMessagingBaseService {
-	private static readonly subject: number = 1;
+	private static readonly subject = 1;
 	private _subscribed = false;
 	private _idleMode = new BehaviorSubject<boolean>(false);
 	private readonly _registeredDevicesSubject = new BehaviorSubject<Array<ManagementRegisteredDevice>>([]);

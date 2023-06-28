@@ -48,15 +48,16 @@ export class RegisterDeviceService {
 			return;
 		}
 
-		const device = new Device(registerDefaultIndex,
+		const device = new Device(indexRegisterDefault,
 			this.name,
 			this.bus,
-			registerDefaultBusName,
+			busNameRegisterDefault,
 			this.type,
-			registerDefaultTypeName,
+			typeNameRegisterDefault,
 			notSystem,
 			this.direction,
-			registerDefaultEnabled,
+			enabledRegisterDefault,
+			mutedRegisterDefault,
 			this.address);
 
 		this._managementConsoleService.registerDevice(device);
@@ -67,8 +68,9 @@ export class RegisterDeviceService {
 	}
 }
 
-const registerDefaultIndex = 0;
-const registerDefaultBusName: string = undefined;
-const registerDefaultTypeName: string = undefined;
+const indexRegisterDefault = 0;
+const busNameRegisterDefault: string = undefined;
+const typeNameRegisterDefault: string = undefined;
 const notSystem = false;
-const registerDefaultEnabled = true;
+const enabledRegisterDefault = true;
+const mutedRegisterDefault = false;

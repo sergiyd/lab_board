@@ -143,10 +143,13 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 			.devices
 			.map(device => [device.index, new Array<ReadonlyArray<number>>(chartDeepMs / this.chartStepMs)]));
 
+    const isOutput = false;
+    const notMuted = false;
+
 		const datasets = this
 			._fileData
 			.devices
-			.map(device => new Source(device.index, false, device.name, device.extra))
+			.map(device => new Source(device.index, isOutput, notMuted, device.name, device.extra))
 			.map(source => {
 				return new Dataset(source,
 					this._sourceData$.pipe(map(sourcesSync => sourcesSync.data.find(data => data.index === source.index))));

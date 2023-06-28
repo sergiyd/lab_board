@@ -16,7 +16,7 @@ import { SourcesSync } from '../models/sources-sync';
 	providedIn: 'root'
 })
 export class LiveDataService extends BoardMessagingBaseService {
-	private static readonly subject: number = 2;
+	private static readonly subject = 2;
 	private readonly _sourcesSubjects = new Subject<Array<Subject<Source>>>();
 	private readonly _fetchingSubject = new Subject<boolean>();
 	private readonly _sourcesSyncSubject = new Subject<SourcesSync>();
@@ -92,12 +92,15 @@ export class LiveDataService extends BoardMessagingBaseService {
 	private processSource(messageData: ArrayBuffer): void {
 		const reader = new BufferReader(messageData);
 		const sourceIndex = reader.readUint8();
-		const isOutput = !!reader.readUint8();
+    const flags = reader.readUint8();
+    const isOutput = !!(flags & SourceFlags.Output);
+    const isMuted = !!(flags & SourceFlags.Muted);
 
 		const extra = ArrayUtilsService.bufferToArray(reader.sliceSized());
 
 		const source = new Source(sourceIndex,
 			isOutput,
+      isMuted,
 			ArrayUtilsService.bufferToString(reader.sliceSized()),
 			extra);
 

@@ -13,7 +13,7 @@ import { BufferReader } from 'src/app/models/buffer-reader';
 	providedIn: 'root'
 })
 export class FileDataService extends BoardMessagingBaseService {
-	private static readonly subject: number = 3
+	private static readonly subject = 3;
 	private readonly _files = new BehaviorSubject<Array<DataFile>>([]);
 	private _idleMode = new BehaviorSubject<boolean>(false);
 	private _subscribed = false;

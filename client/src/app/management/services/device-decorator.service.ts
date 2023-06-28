@@ -55,6 +55,8 @@ export class DeviceDecoratorService {
 				DeviceDirection.Input,
 			// tslint:disable-next-line: no-bitwise
 			!!(flags & DeviceFlags.Enabled),
+			// tslint:disable-next-line: no-bitwise
+			!!(flags & DeviceFlags.Muted),
 			ArrayUtilsService.bufferToArray(address));
 	}
 
@@ -62,7 +64,8 @@ export class DeviceDecoratorService {
 		// tslint:disable-next-line: no-bitwise
 		return (device.system ? DeviceFlags.System : 0) |
 			(device.direction === DeviceDirection.Output ? DeviceFlags.Direction : 0) |
-			(device.enabled ? DeviceFlags.Enabled : 0);
+			(device.enabled ? DeviceFlags.Enabled : 0) |
+			(device.muted ? DeviceFlags.Muted : 0);
 	}
 
 	public static setEnabledFlag(device: Device, value: boolean): Device {
@@ -75,12 +78,14 @@ export class DeviceDecoratorService {
 			device.system,
 			device.direction,
 			value,
+      device.muted,
 			device.address);
 	}
 }
 
-class DeviceFlags {
-	public static readonly System: number = 1;
-	public static readonly Direction: number = 2;
-	public static readonly Enabled: number = 4;
+enum DeviceFlags {
+	System = 1,
+	Direction = 2,
+	Enabled = 4,
+	Muted = 8
 }

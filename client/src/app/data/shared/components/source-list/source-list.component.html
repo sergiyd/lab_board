@@ -12,7 +12,11 @@
 	<tbody>
 		<tr *ngFor="let dataset of datasets$ | async">
 			<td>{{dataset.index}}</td>
-			<td>{{dataset.name}}</td>
+			<td>
+        <label for="source{{dataset.index}}" class="pure-checkbox">
+          <input type="checkbox" id="source{{dataset.index}}" [checked]="!dataset.muted"> {{dataset.name}}
+        </label>
+      </td>
 			<td>
 				<input [(colorPicker)]="dataset.color"
 					[cpOKButton]="true"

@@ -28,6 +28,10 @@ export class Dataset {
 		return this._source.name;
 	}
 
+	public get muted(): boolean {
+		return this._source.muted;
+	}
+
 	public get extra(): ReadonlyArray<number> {
 		return [this.colorRed, this.colorGreen, this.colorBlue, this.convertionType, this.formatterCode];
 	}

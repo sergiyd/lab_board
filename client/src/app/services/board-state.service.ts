@@ -13,7 +13,7 @@ import { BoardService } from './board.service';
 	providedIn: 'root'
 })
 export class BoardStateService extends BoardMessagingBaseService {
-	private static readonly subject: number = 0;
+	private static readonly subject = 0;
 	private readonly _state = new BehaviorSubject<BoardState>(BoardState.unknown);
 
 	private readonly _idleMode = new BehaviorSubject<boolean>(false);
