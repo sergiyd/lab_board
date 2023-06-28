@@ -153,6 +153,15 @@ export class LiveComponent implements OnInit, OnDestroy {
 		this._liveDataService.putExtra(dataset.index, dataset.extra);
 	}
 
+	public muteDataset(dataset: Dataset): void {
+    if (dataset.unmuted) {
+      this._liveDataService.muteSource(dataset.index);
+      this._sourcesDataSubject.get(dataset.index).next(new SourceData(dataset.index, SourceFlags.Muted, new Uint8Array()));      
+    } else {
+      this._liveDataService.unmuteSource(dataset.index);
+    }
+	}
+
 	public get syncInterval(): number {
 		return this._liveDataService.syncInterval;
 	}

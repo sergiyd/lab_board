@@ -11,6 +11,7 @@ export class Dataset {
 	public color: string;
 	public convertionType: ConvertionTypes;
 	public formatterCode: FormatterCodes;
+  public unmuted: boolean;
 
 	constructor(private readonly _source: Source,
 		public readonly sourceData$: Observable<SourceData>) {
@@ -18,6 +19,7 @@ export class Dataset {
 		this.color = `#${Dataset.toHex(extra[0])}${Dataset.toHex(extra[1])}${Dataset.toHex(extra[2])}`;
 		this.convertionType = extra[3];
 		this.formatterCode = extra[4];
+    this.unmuted = !_source.muted;
 	}
 
 	public get index(): number {
@@ -26,10 +28,6 @@ export class Dataset {
 
 	public get name(): string {
 		return this._source.name;
-	}
-
-	public get muted(): boolean {
-		return this._source.muted;
 	}
 
 	public get extra(): ReadonlyArray<number> {

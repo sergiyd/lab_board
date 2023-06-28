@@ -31,6 +31,9 @@ export class SourceListComponent implements OnInit, OnDestroy {
 	@Output()
 	public readonly changeDatasetSettings = new EventEmitter<Dataset>();
 
+	@Output()
+	public readonly muteDataset = new EventEmitter<Dataset>();
+
 	constructor(private readonly _liveDataService: LiveDataService) { }
 
 	ngOnInit(): void {
@@ -45,6 +48,10 @@ export class SourceListComponent implements OnInit, OnDestroy {
 	public changeSettings(dataset: Dataset): void {
 		this.changeDatasetSettings.emit(dataset);
 	}
+
+  public changeMute(dataset: Dataset): void {
+		this.muteDataset.emit(dataset);
+	} 
 }
 
 class FormatterItem {

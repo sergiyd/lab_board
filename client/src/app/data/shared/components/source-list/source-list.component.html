@@ -14,7 +14,7 @@
 			<td>{{dataset.index}}</td>
 			<td>
         <label for="source{{dataset.index}}" class="pure-checkbox">
-          <input type="checkbox" id="source{{dataset.index}}" [checked]="!dataset.muted"> {{dataset.name}}
+          <input type="checkbox" id="source{{dataset.index}}" [(checked)]="dataset.unmuted" (change)="changeMute(dataset)"> {{dataset.name}}
         </label>
       </td>
 			<td>

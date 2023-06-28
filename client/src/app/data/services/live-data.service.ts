@@ -62,6 +62,10 @@ export class LiveDataService extends BoardMessagingBaseService {
 		this.sendCommand(MonitoringCommands.PutExtra, new Uint8Array([index, extra.length].concat(extra)));
 	}
 
+  private sendMute(index: number, value: boolean): void {
+    this.sendCommand(MonitoringCommands.Mute, new Uint8Array([index, +value]));
+  }
+
 	protected processMessage(boardMessage: BoardMessage): void {
 		switch (boardMessage.command as MonitoringCommands) {
 			case MonitoringCommands.SourcesCount:
@@ -144,6 +148,14 @@ export class LiveDataService extends BoardMessagingBaseService {
 		this.sendPutExtra(index, extra);
 	}
 
+  public muteSource(index: number): void {
+    this.sendMute(index, true);
+  }
+
+  public unmuteSource(index: number): void {
+    this.sendMute(index, false);
+  }
+
 	public get fetching$(): Observable<boolean> {
 		return this._fetchingSubject;
 	}
@@ -171,5 +183,6 @@ enum MonitoringCommands {
 	SourcesCount = 1,
 	Source = 2,
 	SourceData = 3,
-	PutExtra = 4
+	PutExtra = 4,
+  Mute = 5
 }

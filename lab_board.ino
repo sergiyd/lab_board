@@ -1651,7 +1651,14 @@ void handleMonitoringSubject(const message_in_t *message)
     }
     else
     {
-      device->flags &= 0xFF & (DEVICE_FLAG_MUTED *  message->data[1]); 
+      if (message->data[1])
+      {
+        device->flags |= DEVICE_FLAG_MUTED;
+      }
+      else
+      {
+        device->flags &= 0xFF ^ DEVICE_FLAG_MUTED;
+      }
     }
 
     // Send update for subscribed ones
