@@ -93,12 +93,12 @@
 #define MSG_CMD_MANAGEMENT_ALL_DEVICES_COUNT 7
 #define MSG_CMD_MANAGEMENT_DEVICE 8
 #define MSG_CMD_MANAGEMENT_DEVICE_VALUE 9
-#define MSG_CMD_MANAGEMENT_MUTE_DEVICE 10
 
 #define MSG_CMD_MONITORING_SOURCES_COUNT 1
 #define MSG_CMD_MONITORING_SOURCE 2
 #define MSG_CMD_MONITORING_SOURCE_DATA 3
 #define MSG_CMD_MONITORING_PUT_EXTRA 4
+#define MSG_CMD_MONITORING_MUTE 5
 
 #define MSG_CMD_HISTORY_FILES_COUNT 1
 #define MSG_CMD_HISTORY_FILE 2
@@ -120,7 +120,7 @@
 #define DEVICE_EXTRA_LENGTH 8
 #define DEVICE_LENGTH sizeof(stored_device_t)
 
-#define DEVICE_FLAG_MANAGEMENT_MASK 0x0F
+#define DEVICE_FLAG_MANAGEMENT_MASK 0x07
 #define DEVICE_FLAG_SYSTEM 1
 #define DEVICE_FLAG_OUTPUT 2
 #define DEVICE_FLAG_ENABLED 4
@@ -1435,23 +1435,6 @@ void handleManagementSubject(const message_in_t *message)
     break;
   case MSG_CMD_MANAGEMENT_SWITCH_DEVICE:
     deviceIndex = message->data[0];
-    device = devices[deviceIndex];
-
-    if (message->data[1])
-    {
-      device->flags |= DEVICE_FLAG_MUTED;
-    }
-    else
-    {
-      device->flags &= 0xFF ^ DEVICE_FLAG_MUTED;
-    }
-
-    messageOut->data[0] = deviceIndex;
-    messageOut->data[1] = message->data[1];
-    sendBin(WEB_SOCKET_NUMBER_BROADCAST_MANAGEMENT, subjectCommandLength + (sizeof(uint8_t) * 2));
-    break;
-  case MSG_CMD_MANAGEMENT_MUTE_DEVICE:
-    deviceIndex = message->data[0];
 
     if (!isDeviceEditable(deviceIndex))
     {
@@ -1625,7 +1608,8 @@ void handleMonitoringSubject(const message_in_t *message)
   uint8_t deviceIndex = 0;
   device_t *device;
 
-  if (message->command == MSG_CMD_MONITORING_PUT_EXTRA)
+  if (message->command == MSG_CMD_MONITORING_PUT_EXTRA ||
+    message->command == MSG_CMD_MONITORING_MUTE)
   {
     // Update devices + flash
     deviceIndex = message->data[0];
@@ -1634,13 +1618,20 @@ void handleMonitoringSubject(const message_in_t *message)
       return;
     }
     device = devices[deviceIndex];
-    uint8_t extra[DEVICE_EXTRA_LENGTH];
-    memcpy(device->extra, &message->data[2], message->data[1]);
-    memcpy(&extra, device->extra, sizeof(extra));
+    if (message->command == MSG_CMD_MONITORING_PUT_EXTRA)
+    {
+      uint8_t extra[DEVICE_EXTRA_LENGTH];
+      memcpy(device->extra, &message->data[2], message->data[1]);
+      memcpy(&extra, device->extra, sizeof(extra));
 
-    EEPROM.begin(EEPROM_DEVICES_BUFFER);
-    EEPROM.put(deviceExtraOffset(device->extraBlock), extra);
-    EEPROM.end();
+      EEPROM.begin(EEPROM_DEVICES_BUFFER);
+      EEPROM.put(deviceExtraOffset(device->extraBlock), extra);
+      EEPROM.end();
+    }
+    else
+    {
+      device->flags &= 0xFF & (DEVICE_FLAG_MUTED *  message->data[1]); 
+    }
 
     // Send update for subscribed ones
     uint8_t payloadIn[] = {MSG_SBJ_MONITORING, MSG_CMD_MONITORING_SOURCE, 0, deviceIndex};
