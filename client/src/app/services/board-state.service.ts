@@ -53,10 +53,6 @@ export class BoardStateService extends BoardMessagingBaseService {
 		return this._idleMode.pipe(distinctUntilChanged());
 	}
 
-	public subscribeSubject(subject: number): void {
-		this.sendSubscribe(subject, true);
-	}
-
 	public unsubscribeSubject(subject: number): void {
 		this.sendSubscribe(subject, false);
 	}

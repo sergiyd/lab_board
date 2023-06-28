@@ -78,7 +78,9 @@ export class BoardService {
 	}
 
 	public send(subject: number, message: BoardMessage): void {
-		this._webSocketSubject.next(new SubjectMessage(subject, message));
+    if (this._status.value === BoardServiceStatus.Online) {
+		  this._webSocketSubject.next(new SubjectMessage(subject, message));
+    }
 	}
 
 	public disconnect(): void {
