@@ -32,6 +32,11 @@
 						]
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -68,6 +73,9 @@
             "browserTarget": "client:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "client:build:development"
+            },
             "production": {
               "browserTarget": "client:build:production"
             }
