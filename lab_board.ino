@@ -656,7 +656,7 @@ void wifiBootstrap()
     return;
   }
 
-  File file = SD.open(fileName, 0x01);
+  File file = SD.open(fileName, FILE_READ);
 
   char ssid[WIFI_SSID_MAX_LEN];
   memset(&ssid, 0, sizeof(ssid));
@@ -832,11 +832,11 @@ void handleSerial()
   else if (command == "date_set")
   {
     RtcDateTime newDate((uint16_t)value.substring(0, 4).toInt(),
-                        (uint8_t)value.substring(5, 7).toInt(),
+                        (uint8_t)value.substring(4, 6).toInt(),
+                        (uint8_t)value.substring(6, 8).toInt(),
                         (uint8_t)value.substring(8, 10).toInt(),
-                        (uint8_t)value.substring(11, 13).toInt(),
-                        (uint8_t)value.substring(14, 16).toInt(),
-                        (uint8_t)value.substring(17, 19).toInt());
+                        (uint8_t)value.substring(10, 12).toInt(),
+                        (uint8_t)value.substring(12, 14).toInt());
     rtcObject.SetDateTime(newDate);
   }
   else if (command == "temp_get")
@@ -1208,7 +1208,7 @@ void setupWebServer()
     webServer.sendHeader("Access-Control-Allow-Origin", "*");
 #endif
 
-    fsDataFile = SD.open((const char *)&fileName, 0x01);
+    fsDataFile = SD.open((const char *)&fileName, FILE_READ);
     webServer.streamFile(fsDataFile, "application/json");
     fsDataFile.close(); });
 
