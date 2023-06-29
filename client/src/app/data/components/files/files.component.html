@@ -16,7 +16,7 @@
 			</ng-container>
 			<ng-container *ngIf="file.name">
 				<td><a [routerLink]="['/data/play-file', file.name]">Play</a></td>
-				<td><a target="_blank" href="/data-file?name={{file.name}}">{{file.name}}</a></td>				
+				<td><a target="_blank" href="{{boardUrl}}/data-file?name={{file.name}}">{{file.name}}</a></td>				
 				<td>{{file.size}}</td>
 				<td><button class="pure-button" [disabled]="!(idleMode$ | async)" (click)="removeFile(file.name)">Remove</button></td>
 			</ng-container>

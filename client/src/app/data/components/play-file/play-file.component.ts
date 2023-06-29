@@ -9,6 +9,7 @@ import { SourcesSync } from '../../models/sources-sync';
 import { DataConvertorService } from '../../services/data-convertor.service';
 import { ChartDataset } from '../../shared/models/chart-dataset';
 import { Dataset } from '../../shared/models/dataset';
+import { ConfigResolverService } from 'src/app/services/config-resolver.service';
 
 @Component({
 	selector: 'app-play-file',
@@ -18,6 +19,7 @@ import { Dataset } from '../../shared/models/dataset';
 export class PlayFileComponent implements OnInit, OnDestroy {
 	private readonly _chartDatasetsSubject = new BehaviorSubject<ReadonlyArray<ChartDataset>>([]);
 	private readonly _datasetsSubject = new BehaviorSubject<ReadonlyArray<Dataset>>([]);
+  private readonly _boardUrl: string;
 	private _name: string;
 	private _loadedSubject = new Subject<boolean>();
 	private _fileData: FileData;
@@ -38,7 +40,10 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	public readonly playerAction$ = this._playerActionSubject.asObservable();
 
 	constructor(private readonly _route: ActivatedRoute,
-		private readonly _httpClient: HttpClient) { }
+		private readonly _httpClient: HttpClient,
+    configResolverService: ConfigResolverService) {
+      this._boardUrl = configResolverService.resolve().boardUrl;      
+    }
 
 	public ngOnInit(): void {
 		this._name = this._route.snapshot.paramMap.get('name');
@@ -46,7 +51,7 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 		this._downloadProgressSubject.next(new DownloadProgress(0));
 		this
 			._httpClient
-			.get(`/data-file?name=${this._name}`, {
+			.get(`${this._boardUrl}/data-file?name=${this._name}`, {
 				observe: 'events',
 				responseType: 'json',
 				reportProgress: true

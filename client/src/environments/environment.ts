@@ -4,7 +4,7 @@
 
 export const environment = {
 	production: false,
-  wsUrl: '',
+  boardHost: '',
 	reconnectTimeoutMs: 5000,
 	reconnectAttempts: 3
 };

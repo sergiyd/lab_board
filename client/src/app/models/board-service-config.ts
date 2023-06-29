@@ -1,5 +1,6 @@
 export interface BoardServiceConfig {
-	readonly url: string;
+	readonly wsUrl: string;
+	readonly boardUrl: string;
 	readonly reconnectTimeoutMs: number;
 	readonly reconnectAttempts: number;
 }

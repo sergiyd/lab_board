@@ -28,7 +28,7 @@ export class BoardService {
 		this._reconnectAttempts = config.reconnectAttempts;
 
 		this._config = {
-			url: config.url,
+			url: config.wsUrl,
 			binaryType: 'arraybuffer',
 			serializer: (message: SubjectMessage) => {
 				const boardMessageBytes = Array.from(new Int8Array(ArrayUtilsService.boardMessageToBuffer(message.message)));

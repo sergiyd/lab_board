@@ -11,19 +11,28 @@ export class ConfigResolverService {
 	constructor(@Inject(WINDOW) private readonly _window: Window) { }
 
 	public resolve(): BoardServiceConfig {
-		const configUrl = environment.production ?
-			this.getRelativeUrl() :
-			environment.wsUrl;
+		const wsUrl = environment.production ?
+			this.buildWsUrl(this._window.location.hostname) :
+			this.buildWsUrl(environment.boardHost);
+
+    const boardUrl = environment.production ?
+			this.buildHttpUrl(this._window.location.hostname) :
+			this.buildHttpUrl(environment.boardHost);
 
 		return {
-			url: configUrl,
+			wsUrl,
+      boardUrl,
 			reconnectTimeoutMs: environment.reconnectTimeoutMs,
 			reconnectAttempts: environment.reconnectAttempts
 		}
 	}
 
-	private getRelativeUrl(): string {
-		return `ws://${this._window.location.hostname}:81`;
+	private buildWsUrl(host: string): string {
+		return `ws://${host}:81`;
 	}
+
+  private buildHttpUrl(host: string): string {
+		return `http://${host}`;
+	} 
 }
 
