@@ -1068,6 +1068,7 @@ void sendSourceData(uint8_t number, uint32_t timestamp, uint8_t index)
   uint8_t inputsUpdated = 0;
   uint8_t dataOffset;
   device_t *device;
+  uint8_t flags;
   for (uint8_t deviceIndex = 0; deviceIndex < deviceCount; deviceIndex++)
   {
     device = devices[deviceIndex];
@@ -1076,7 +1077,8 @@ void sendSourceData(uint8_t number, uint32_t timestamp, uint8_t index)
       continue;
     }
     dataOffset = inputsUpdated * (sizeof(device_d_t) + 1) + sizeof(timestamp);
-    messageOut->data[dataOffset + 1] = deviceIndex | (device->flags & DEVICE_FLAG_MONIRORING_MASK);
+    flags = device->flags & (DEVICE_FLAG_MONIRORING_MASK * (1 - min(device->flags & DEVICE_FLAG_MUTED, 1)));
+    messageOut->data[dataOffset + 1] = deviceIndex | flags;
     memcpy(&messageOut->data[dataOffset + 2], &device->data, sizeof(device_d_t));
     inputsUpdated++;
 
