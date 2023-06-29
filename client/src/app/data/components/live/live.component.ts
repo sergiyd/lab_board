@@ -210,7 +210,7 @@ class ViewDataset {
 
 	public shift(skip: number): void {
 		// tslint:disable-next-line:no-bitwise
-		if (!(this._flags & SourceFlags.Active)) {
+		if (!(this._flags & SourceFlags.Active) || !this._dataset.unmuted) {
 			this._instantData = undefined;
 		}
 
