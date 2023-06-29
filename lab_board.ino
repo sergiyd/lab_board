@@ -1658,6 +1658,7 @@ void handleMonitoringSubject(const message_in_t *message)
       else
       {
         device->flags &= 0xFF ^ DEVICE_FLAG_MUTED;
+        device->flags |= DEVICE_FLAG_SYNC;
       }
     }
 
