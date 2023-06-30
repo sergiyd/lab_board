@@ -1,7 +1,7 @@
-import { BufferReader } from './buffer-reader';
+import { BufferReader } from "./buffer-reader";
 
-describe('BufferReader', () => {
-	it('should create an instance', () => {
-		expect(new BufferReader()).toBeTruthy();
-	});
+describe("BufferReader", () => {
+  it("should create an instance", () => {
+    expect(new BufferReader()).toBeTruthy();
+  });
 });

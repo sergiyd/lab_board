@@ -1,7 +1,9 @@
 export class Source {
-	constructor(public readonly index: number,
-		public readonly output: boolean,
+  constructor(
+    public readonly index: number,
+    public readonly output: boolean,
     public readonly muted: boolean,
-		public readonly name: string,
-		public readonly extra: readonly number[]) {}
+    public readonly name: string,
+    public readonly extra: readonly number[]
+  ) {}
 }

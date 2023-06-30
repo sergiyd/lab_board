@@ -1,8 +1,7 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ArrayUtilsService } from './array-utils.service';
+import { ArrayUtilsService } from "./array-utils.service";
 
-describe('ArrayUtilsService', () => {
+describe("ArrayUtilsService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
-
 });

@@ -1,41 +1,61 @@
 <div class="pure-form pure-form-aligned">
-	<fieldset>
-		<legend>Register</legend>
-		
-		<div class="pure-control-group">
-			<label for="name">Name</label>
-			<input type="text" id="name" [(ngModel)]="name" />
-		</div>
+  <fieldset>
+    <legend>Register</legend>
 
-		<div class="pure-control-group">
-			<label for="bus">Bus</label>
-			<select [(ngModel)]="bus" name="bus">
-				<option *ngFor="let busItem of busItems" [ngValue]="busItem.bus">{{busItem.name}}</option>
-			</select>
-		</div>
+    <div class="pure-control-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" [(ngModel)]="name" />
+    </div>
 
-		<div class="pure-control-group">
-			<label for="type">Type</label>
-			<select [(ngModel)]="type" name="type">
-				<option *ngFor="let typeItem of typeItems" [value]="typeItem.type">{{typeItem.name}}</option>
-			</select>
-		</div>
+    <div class="pure-control-group">
+      <label for="bus">Bus</label>
+      <select [(ngModel)]="bus" name="bus">
+        <option *ngFor="let busItem of busItems" [ngValue]="busItem.bus">
+          {{ busItem.name }}
+        </option>
+      </select>
+    </div>
 
-		<div class="pure-control-group">
-			<label for="directionInput">Input</label>
-			<input type="radio" id="directionInput" name="direction" [value]="directionInput" [(ngModel)]="direction" />
-		</div>
-		<div class="pure-control-group">
-			<label for="directionOutput">Output</label>
-			<input type="radio" id="directionOutput" name="direction" [value]="directionOutput" [(ngModel)]="direction" />
-		</div>
+    <div class="pure-control-group">
+      <label for="type">Type</label>
+      <select [(ngModel)]="type" name="type">
+        <option *ngFor="let typeItem of typeItems" [value]="typeItem.type">
+          {{ typeItem.name }}
+        </option>
+      </select>
+    </div>
 
-		<div class="pure-control-group">
-			<label for="address">Address</label>
-			<input type="text" name="address" [(ngModel)]="address" />
-		</div>
+    <div class="pure-control-group">
+      <label for="directionInput">Input</label>
+      <input
+        type="radio"
+        id="directionInput"
+        name="direction"
+        [value]="directionInput"
+        [(ngModel)]="direction"
+      />
+    </div>
+    <div class="pure-control-group">
+      <label for="directionOutput">Output</label>
+      <input
+        type="radio"
+        id="directionOutput"
+        name="direction"
+        [value]="directionOutput"
+        [(ngModel)]="direction"
+      />
+    </div>
 
-	</fieldset>
-
+    <div class="pure-control-group">
+      <label for="address">Address</label>
+      <input type="text" name="address" [(ngModel)]="address" />
+    </div>
+  </fieldset>
 </div>
-<button (click)="register()" class="pure-button pure-button-primary" [disabled]="!(idleMode$ | async)">Register</button>
+<button
+  (click)="register()"
+  class="pure-button pure-button-primary"
+  [disabled]="!(idleMode$ | async)"
+>
+  Register
+</button>

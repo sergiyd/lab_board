@@ -1,7 +1,7 @@
-import { WindowProvider } from './window-provider';
+import { WindowProvider } from "./window-provider";
 
-describe('WindowProvider', () => {
-	it('should create an instance', () => {
-		expect(new WindowProvider()).toBeTruthy();
-	});
+describe("WindowProvider", () => {
+  it("should create an instance", () => {
+    expect(new WindowProvider()).toBeTruthy();
+  });
 });

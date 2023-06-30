@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-	production: false,
-  boardHost: '',
-	reconnectTimeoutMs: 5000,
-	reconnectAttempts: 3
+  production: false,
+  boardHost: "",
+  reconnectTimeoutMs: 5000,
+  reconnectAttempts: 3,
 };
 
 /*

@@ -1,3 +1,3 @@
 export interface Convertor {
-	convert(data: DataView): number;
+  convert(data: DataView): number;
 }

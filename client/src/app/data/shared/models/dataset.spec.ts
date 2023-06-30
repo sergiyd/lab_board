@@ -1,7 +1,7 @@
-import { Dataset } from './dataset';
+import { Dataset } from "./dataset";
 
-describe('Dataset', () => {
-	it('should create an instance', () => {
-		expect(new Dataset()).toBeTruthy();
-	});
+describe("Dataset", () => {
+  it("should create an instance", () => {
+    expect(new Dataset()).toBeTruthy();
+  });
 });

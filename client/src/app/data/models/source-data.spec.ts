@@ -1,7 +1,7 @@
-import { SourceData } from './source-data';
+import { SourceData } from "./source-data";
 
-describe('SourceData', () => {
-  it('should create an instance', () => {
+describe("SourceData", () => {
+  it("should create an instance", () => {
     expect(new SourceData()).toBeTruthy();
   });
 });

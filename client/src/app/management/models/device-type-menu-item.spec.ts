@@ -1,7 +1,7 @@
-import { DeviceTypeMenuItem } from './device-type-menu-item';
+import { DeviceTypeMenuItem } from "./device-type-menu-item";
 
-describe('DeviceTypeMenuItem', () => {
-	it('should create an instance', () => {
-		expect(new DeviceTypeMenuItem()).toBeTruthy();
-	});
+describe("DeviceTypeMenuItem", () => {
+  it("should create an instance", () => {
+    expect(new DeviceTypeMenuItem()).toBeTruthy();
+  });
 });

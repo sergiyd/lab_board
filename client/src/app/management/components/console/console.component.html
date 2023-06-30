@@ -1,43 +1,51 @@
 <p>Registered devices</p>
 <table class="pure-table lab-table">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Name</th>
-			<th>Bus</th>
-			<th>Type</th>
-			<th>Address</th>
-			<th colspan="2"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<ng-container *ngFor="let device of devices$ | async">
-			<tr *ngIf="device.loading">
-				<td colspan="6" class="lab-td-loading">
-					<span>Retrieving </span><img src="assets/img/loading.gif" alt="Loading">
-				</td>
-			</tr>
-			<tr *ngIf="!device.loading">
-				<td>#{{device.index}}</td>
-				<td>{{device.name}}</td>
-				<td>{{device.busName}}</td>
-				<td>{{device.typeName}} ({{device.direction}})</td>
-				<td>{{device.address}}</td>
-				<td *ngIf="device.system" class="lab-td-system" colspan="2">
-					System
-				</td>
-				<ng-container *ngIf="!device.system">
-					<td>
-						<button *ngIf="!device.system" [disabled]="!(idleMode$ | async)"
-							(click)="switchDevice(device.index, !device.enabled)">{{device.enabled ? 'Disable' : 'Enable'}}</button>
-					</td>
-					<td>
-						<button *ngIf="!device.system" (click)="unregisterDevice(device.index)"
-							[disabled]="!(idleMode$ | async)">Unregister</button>
-					</td>
-				</ng-container>
-			</tr>
-		</ng-container>
-	</tbody>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Bus</th>
+      <th>Type</th>
+      <th>Address</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let device of devices$ | async">
+      <tr *ngIf="device.loading">
+        <td colspan="6" class="lab-td-loading">
+          <span>Retrieving </span
+          ><img src="assets/img/loading.gif" alt="Loading" />
+        </td>
+      </tr>
+      <tr *ngIf="!device.loading">
+        <td>#{{ device.index }}</td>
+        <td>{{ device.name }}</td>
+        <td>{{ device.busName }}</td>
+        <td>{{ device.typeName }} ({{ device.direction }})</td>
+        <td>{{ device.address }}</td>
+        <td *ngIf="device.system" class="lab-td-system" colspan="2">System</td>
+        <ng-container *ngIf="!device.system">
+          <td>
+            <button
+              *ngIf="!device.system"
+              [disabled]="!(idleMode$ | async)"
+              (click)="switchDevice(device.index, !device.enabled)"
+            >
+              {{ device.enabled ? "Disable" : "Enable" }}
+            </button>
+          </td>
+          <td>
+            <button
+              *ngIf="!device.system"
+              (click)="unregisterDevice(device.index)"
+              [disabled]="!(idleMode$ | async)"
+            >
+              Unregister
+            </button>
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
 </table>
-

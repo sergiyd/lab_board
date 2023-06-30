@@ -1,6 +1,5 @@
-import { DeviceBus } from './device-bus.enum';
+import { DeviceBus } from "./device-bus.enum";
 
 export class DeviceBusMenuItem {
-	constructor(public readonly bus: DeviceBus,
-		public readonly name: string) { }
+  constructor(public readonly bus: DeviceBus, public readonly name: string) {}
 }
