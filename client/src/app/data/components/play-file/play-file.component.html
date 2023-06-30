@@ -17,7 +17,7 @@
 			<span class="lab-span-lmargin">/ {{maxPosition}}</span>
 		</div>
 	</div>
-	<app-source-list [datasets$]="datasets$"></app-source-list>	
+	<app-source-list [datasets$]="datasets$" (muteDataset)="muteDataset($event)"></app-source-list>	
 </ng-container>
 <ng-container *ngIf="!(loaded$ | async)">
 	<div class="lab-div-tmargin">
@@ -27,7 +27,7 @@
 		<div class="lab-div-loading">
 			<span>{{((downloadProgress$ | async)?.percents | number:'1.0-0') || '?'}}%</span>
 			&nbsp;
-			<span>({{((downloadProgress$ | async)?.loaded / 1024) | number:'1.1-2'}}kb / {{((downloadProgress$ | async)?.total / 1024 | number:'1.1-2') || '?'}}kb</span>
+			<span>{{((downloadProgress$ | async)?.loaded / 1024) | number:'1.1-2'}}kb / {{((downloadProgress$ | async)?.total / 1024 | number:'1.1-2') || '?'}}kb</span>
 		</div>		
 		<div class="lab-div-loading">
 			<img src="assets/img/loading.gif" alt="Loading">

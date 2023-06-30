@@ -113,7 +113,7 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	}
 
 	public get datasets$(): Observable<ReadonlyArray<Dataset>> {
-		return this._datasetsSubject;
+		return this._datasetsSubject.asObservable();
 	}
 
 	public get chartDatasets$(): Observable<ReadonlyArray<ChartDataset>> {
@@ -149,13 +149,13 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 			.map(device => [device.index, new Array<ReadonlyArray<number>>(chartDeepMs / this.chartStepMs)]));
 
     const isOutput = false;
-    const notMuted = false;
+    const muted = false;
 
 		const datasets = this
 			._fileData
 			.devices
-			.map(device => new Source(device.index, isOutput, notMuted, device.name, device.extra))
-			.map(source => {
+			.map(device => {
+        const source = new Source(device.index, isOutput, muted, device.name, device.extra);
 				return new Dataset(source,
 					this._sourceData$.pipe(map(sourcesSync => sourcesSync.data.find(data => data.index === source.index))));
 			});
@@ -215,6 +215,7 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 		const chartDatasets = this
 			._datasetsSubject
 			.value
+      .filter(dataset => dataset.unmuted)
 			.map(dataset => {
 				return {
 					label: dataset.name,
@@ -232,6 +233,12 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 			});
 
 		this._chartDatasetsSubject.next(chartDatasets);
+	}
+
+  public muteDataset(dataset: Dataset): void {
+    // Doesn't work with this component in two-sidemodel bind mode
+    dataset.unmuted = !dataset.unmuted;
+    this.position = this.position;
 	}
 }
 
