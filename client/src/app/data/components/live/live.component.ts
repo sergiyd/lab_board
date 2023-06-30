@@ -15,8 +15,8 @@ import { Dataset } from '../../shared/models/dataset';
 })
 export class LiveComponent implements OnInit, OnDestroy {
 	private readonly _viewDatasets = new Map<number, ViewDataset>();
-	private readonly _chartDatasetsSubject = new Subject<ReadonlyArray<ChartDataset>>();
-	private _datasets$: Observable<ReadonlyArray<Dataset>>;
+	private readonly _chartDatasetsSubject = new Subject<readonly ChartDataset[]>();
+	private _datasets$: Observable<readonly Dataset[]>;
 	private _sourcesDataSubject = new Map<number, Subject<SourceData>>();
 	private _fetching = false;
 	private readonly _unsubscribe = new Subject();
@@ -93,7 +93,7 @@ export class LiveComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	private get chartDatasets(): ReadonlyArray<ChartDataset> {
+	private get chartDatasets(): readonly ChartDataset[] {
 		return Array.from(this._viewDatasets.values()).map(dataset => dataset.chartDataset);
 	}
 
@@ -141,11 +141,11 @@ export class LiveComponent implements OnInit, OnDestroy {
 		return this._instantSyncIntervalSubject;
 	}
 
-	public get datasets$(): Observable<ReadonlyArray<Dataset>> {
+	public get datasets$(): Observable<readonly Dataset[]> {
 		return this._datasets$;
 	}
 
-	public get chartDatasets$(): Observable<ReadonlyArray<ChartDataset>> {
+	public get chartDatasets$(): Observable<readonly ChartDataset[]> {
 		return this._chartDatasetsSubject;
 	}
 
@@ -225,7 +225,7 @@ class ViewDataset {
 		this._data[this._data.length - 1] = this._instantData && new DataView(this._instantData);
 	}
 
-	private get convertedData(): ReadonlyArray<number> {
+	private get convertedData(): readonly number[] {
 		return this.
 			_data
 			.map(dataView => DataConvertorService.convertNumber(dataView, this._dataset.convertionType, this._dataset.formatterCode));

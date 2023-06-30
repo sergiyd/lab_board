@@ -30,7 +30,7 @@ export class Dataset {
 		return this._source.name;
 	}
 
-	public get extra(): ReadonlyArray<number> {
+	public get extra(): readonly number[] {
 		return [this.colorRed, this.colorGreen, this.colorBlue, this.convertionType, this.formatterCode];
 	}
 

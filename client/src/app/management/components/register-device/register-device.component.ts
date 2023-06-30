@@ -19,13 +19,13 @@ export class RegisterDeviceComponent implements OnInit, OnDestroy {
 	private static readonly buses: ReadonlyMap<DeviceBus, string> = new Map<DeviceBus, string>(
 		RegisterDeviceService.buses.map(b => [b, DeviceDecoratorService.busNames.get(b)])
 	);
-	public static readonly busItems: ReadonlyArray<DeviceBusMenuItem> =
+	public static readonly busItems: readonly DeviceBusMenuItem[] =
 		Array.from(RegisterDeviceComponent.buses.keys()).map(k => new DeviceBusMenuItem(k, RegisterDeviceComponent.buses.get(k)));
 
 	private static readonly types: ReadonlyMap<DeviceType, string> = new Map<DeviceType, string>(
 		Array.from(DeviceDecoratorService.types).map(t => [t, DeviceDecoratorService.typeNames.get(t)])
 	);
-	private static typesItems: ReadonlyArray<DeviceTypeMenuItem> =
+	private static typesItems: readonly DeviceTypeMenuItem[] =
 		Array.from(RegisterDeviceComponent.types.keys()).map(k => new DeviceTypeMenuItem(k, RegisterDeviceComponent.types.get(k)));
 
 	public readonly directionInput: DeviceDirection = DeviceDirection.Input;
@@ -40,11 +40,11 @@ export class RegisterDeviceComponent implements OnInit, OnDestroy {
 		this._registerDeviceService.reset();
 	}
 
-	public get busItems(): ReadonlyArray<DeviceBusMenuItem> {
+	public get busItems(): readonly DeviceBusMenuItem[] {
 		return RegisterDeviceComponent.busItems;
 	}
 
-	public get typeItems(): ReadonlyArray<DeviceTypeMenuItem> {
+	public get typeItems(): readonly DeviceTypeMenuItem[] {
 		return RegisterDeviceComponent.typesItems;
 	}
 

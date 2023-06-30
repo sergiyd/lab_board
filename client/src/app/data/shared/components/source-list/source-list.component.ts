@@ -12,19 +12,19 @@ import { ConvertionTypes } from 'src/app/data/models/convertion-types.enum';
 	styleUrls: ['./source-list.component.css']
 })
 export class SourceListComponent implements OnInit, OnDestroy {
-	public readonly formatters: ReadonlyArray<FormatterItem> =
+	public readonly formatters: readonly FormatterItem[] =
 		Array.from(DataConvertorService.getFormatters()).map(item => new FormatterItem(item[0], item[1]));
-	public readonly convertors: ReadonlyArray<ConvertorItem> =
+	public readonly convertors: readonly ConvertorItem[] =
 		Array.from(DataConvertorService.getConvertors()).map(item => new ConvertorItem(item[0], item[1]));
 
 	private readonly _unsubscribe = new Subject();
-	private _datasets$: Observable<ReadonlyArray<Dataset>>;
+	private _datasets$: Observable<readonly Dataset[]>;
 
-	public get datasets$(): Observable<ReadonlyArray<Dataset>> {
+	public get datasets$(): Observable<readonly Dataset[]> {
 		return this._datasets$;
 	}
 	@Input()
-	public set datasets$(datasets: Observable<ReadonlyArray<Dataset>>) {
+	public set datasets$(datasets: Observable<readonly Dataset[]>) {
 		this._datasets$ = datasets;
 	}
 

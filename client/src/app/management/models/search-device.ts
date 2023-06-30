@@ -7,5 +7,5 @@ export class SearchDevice {
 		public readonly type: DeviceType,
 		public readonly typeName: string,
 		public readonly registered: boolean,
-		public readonly address: ReadonlyArray<number>) {}
+		public readonly address: readonly number[]) {}
 }

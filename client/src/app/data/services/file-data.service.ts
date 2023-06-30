@@ -25,7 +25,7 @@ export class FileDataService extends BoardMessagingBaseService {
 			}
 		}
 
-		return this._files as Observable<ReadonlyArray<DataFile>>;
+		return this._files as Observable<readonly DataFile[]>;
 	}).pipe(finalize(() => {
 		this._subscribed = false;
 		this._boardStateService.unsubscribeSubject(this.subject);
@@ -47,7 +47,7 @@ export class FileDataService extends BoardMessagingBaseService {
 		});
 	}
 
-	public get files$(): Observable<ReadonlyArray<DataFile>> {
+	public get files$(): Observable<readonly DataFile[]> {
 		return this._files$;
 	}
 

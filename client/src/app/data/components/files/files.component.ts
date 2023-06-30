@@ -10,7 +10,7 @@ import { ConfigResolverService } from 'src/app/services/config-resolver.service'
   styleUrls: ['./files.component.css']
 })
 export class FilesComponent {
-  public readonly files$: Observable<ReadonlyArray<DataFile>>;
+  public readonly files$: Observable<readonly DataFile[]>;
   public readonly boardUrl: string;
 
   constructor(private readonly _fileDataService: FileDataService,

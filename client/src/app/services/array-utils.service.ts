@@ -18,11 +18,11 @@ export class ArrayUtilsService {
 			commandBytes);
 	}
 
-	public static addressToHex(address: ReadonlyArray<number>): string {
+	public static addressToHex(address: readonly number[]): string {
 		return address.map(b => b.toString(16)).join(':').toUpperCase();
 	}
 
-	public static hexToAddress(addressHex: string): ReadonlyArray<number> {
+	public static hexToAddress(addressHex: string): readonly number[] {
 		return addressHex.split(':').map(hv => Number.parseInt(hv, 16));
 	}
 
@@ -30,11 +30,11 @@ export class ArrayUtilsService {
 		return this.bufferToArray(buffer).reduce((p, c) => p + String.fromCharCode(c), '');
 	}
 
-	public static bufferToArray(buffer: ArrayBuffer): ReadonlyArray<number> {
+	public static bufferToArray(buffer: ArrayBuffer): readonly number[] {
 		return Array.from(new Uint8Array(buffer));
 	}
 
-	public static stringToArray(value: string): ReadonlyArray<number> {
+	public static stringToArray(value: string): readonly number[] {
 		const result = new Array(value.length + 1);
 		result[0] = value.length;
 		for (let charIndex = 0; charIndex < value.length; charIndex++) {

@@ -17,8 +17,8 @@ import { ConfigResolverService } from 'src/app/services/config-resolver.service'
 	styleUrls: ['./play-file.component.css']
 })
 export class PlayFileComponent implements OnInit, OnDestroy {
-	private readonly _chartDatasetsSubject = new BehaviorSubject<ReadonlyArray<ChartDataset>>([]);
-	private readonly _datasetsSubject = new BehaviorSubject<ReadonlyArray<Dataset>>([]);
+	private readonly _chartDatasetsSubject = new BehaviorSubject<readonly ChartDataset[]>([]);
+	private readonly _datasetsSubject = new BehaviorSubject<readonly Dataset[]>([]);
   private readonly _boardUrl: string;
 	private _name: string;
 	private _loadedSubject = new Subject<boolean>();
@@ -27,7 +27,7 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	private readonly _sourceDataSubject = new Subject<SourcesSync>();
 	private readonly _sourceData$ = this._sourceDataSubject.pipe(share());
 	private _position: number;
-	private _chartDataMatix: ReadonlyMap<number, Array<ReadonlyArray<number>>>;
+	private _chartDataMatix: ReadonlyMap<number, Array<readonly number[]>>;
 	private readonly _playerActionSubject = new Subject<PlayerAction>();
 	public readonly playerActionBegin = PlayerAction.Begin;
 	public readonly playerActionPlayForward = PlayerAction.PlayForward;
@@ -112,11 +112,11 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 		return this._name;
 	}
 
-	public get datasets$(): Observable<ReadonlyArray<Dataset>> {
+	public get datasets$(): Observable<readonly Dataset[]> {
 		return this._datasetsSubject.asObservable();
 	}
 
-	public get chartDatasets$(): Observable<ReadonlyArray<ChartDataset>> {
+	public get chartDatasets$(): Observable<readonly ChartDataset[]> {
 		return this._chartDatasetsSubject;
 	}
 
@@ -143,10 +143,10 @@ export class PlayFileComponent implements OnInit, OnDestroy {
 	private setData(fileData: FileData): void {
 		this._fileData = fileData;
 
-		this._chartDataMatix = new Map<number, Array<ReadonlyArray<number>>>(this
+		this._chartDataMatix = new Map<number, Array<readonly number[]>>(this
 			._fileData
 			.devices
-			.map(device => [device.index, new Array<ReadonlyArray<number>>(chartDeepMs / this.chartStepMs)]));
+			.map(device => [device.index, new Array<readonly number[]>(chartDeepMs / this.chartStepMs)]));
 
     const isOutput = false;
     const muted = false;
@@ -247,8 +247,8 @@ const chartDeepMs = 10000;
 interface FileData {
 	readonly started: number;
 	readonly period: number;
-	readonly devices: ReadonlyArray<FileDataDevice>;
-	readonly data: ReadonlyArray<FileDataBatch>;
+	readonly devices: readonly FileDataDevice[];
+	readonly data: readonly FileDataBatch[];
 }
 
 interface FileDataDevice {
@@ -257,20 +257,20 @@ interface FileDataDevice {
 	readonly bus: number;
 	readonly type: number;
 	readonly name: string;
-	readonly address: ReadonlyArray<number>;
-	readonly extra: ReadonlyArray<number>;
-	readonly data: ReadonlyArray<number>;
+	readonly address: readonly number[];
+	readonly extra: readonly number[];
+	readonly data: readonly number[];
 }
 
 interface FileDataBatch {
 	readonly t: number;
-	readonly d: ReadonlyArray<FileDataRecord>;
+	readonly d: readonly FileDataRecord[];
 }
 
 interface FileDataRecord {
 	readonly i: number;
 	readonly f: number;
-	readonly v: ReadonlyArray<number>;
+	readonly v: readonly number[];
 }
 
 class DownloadProgress {

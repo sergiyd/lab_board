@@ -11,7 +11,7 @@ import { ManagementConsoleService } from 'src/app/management/services/management
 export class ManagementConsoleComponent {
 	constructor(private readonly _managementConsoleService: ManagementConsoleService) { }
 
-	public get devices$(): Observable<ReadonlyArray<ManagementRegisteredDevice>> {
+	public get devices$(): Observable<readonly ManagementRegisteredDevice[]> {
 		return this._managementConsoleService.registeredDevices$;
 	}
 

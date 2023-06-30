@@ -24,7 +24,7 @@ export class SearchDevicesComponent {
 		this._managementConsoleService.searchDevices(this.bus);
 	}
 
-	public get devices$(): Observable<ReadonlyArray<ManagementSearchDevice>> {
+	public get devices$(): Observable<readonly ManagementSearchDevice[]> {
 		return this._managementConsoleService.foundDevices$;
 	}
 
@@ -36,7 +36,7 @@ export class SearchDevicesComponent {
 			device.device.address);
 	}
 
-	public get busItems(): ReadonlyArray<DeviceBusMenuItem> {
+	public get busItems(): readonly DeviceBusMenuItem[] {
 		return RegisterDeviceComponent.busItems;
 	}
 

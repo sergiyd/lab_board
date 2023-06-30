@@ -31,7 +31,7 @@ export class ManagementConsoleService extends BoardMessagingBaseService {
 			}
 		}
 
-		return this._registeredDevicesSubject as Observable<ReadonlyArray<ManagementRegisteredDevice>>;
+		return this._registeredDevicesSubject as Observable<readonly ManagementRegisteredDevice[]>;
 	}).pipe(finalize(() => {
 		this._subscribed = false;
 		this._boardStateService.unsubscribeSubject(this.subject);
@@ -180,11 +180,11 @@ export class ManagementConsoleService extends BoardMessagingBaseService {
 		this._searchDevicesSubject.next(searchDevices);
 	}
 
-	public get registeredDevices$(): Observable<ReadonlyArray<ManagementRegisteredDevice>> {
+	public get registeredDevices$(): Observable<readonly ManagementRegisteredDevice[]> {
 		return this._registeredDevicesSubject$;
 	}
 
-	public get foundDevices$(): Observable<ReadonlyArray<ManagementSearchDevice>> {
+	public get foundDevices$(): Observable<readonly ManagementSearchDevice[]> {
 		return this._searchDevicesSubject;
 	}
 

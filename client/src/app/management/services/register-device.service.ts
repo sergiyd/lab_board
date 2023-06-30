@@ -12,14 +12,14 @@ import { ManagementConsoleService } from './management-console.service';
 	providedIn: 'root'
 })
 export class RegisterDeviceService {
-	public static readonly buses: ReadonlyArray<DeviceBus> =
+	public static readonly buses: readonly DeviceBus[] =
 		Array.from(DeviceDecoratorService.buses.filter(b => b !== DeviceBus.Unknown));
 
 	public name: string;
 	public bus: DeviceBus;
 	public type: DeviceType;
 	public direction: DeviceDirection;
-	public address: ReadonlyArray<number>;
+	public address: readonly number[];
 
 	constructor(private readonly _boardStateService: BoardStateService,
 		private readonly _managementConsoleService: ManagementConsoleService) {
@@ -30,7 +30,7 @@ export class RegisterDeviceService {
 		bus: DeviceBus,
 		type: DeviceType,
 		direction: DeviceDirection,
-		address: ReadonlyArray<number>): void {
+		address: readonly number[]): void {
 
 		this.name = name;
 		this.bus = bus;

@@ -3,5 +3,5 @@ export class Source {
 		public readonly output: boolean,
     public readonly muted: boolean,
 		public readonly name: string,
-		public readonly extra: ReadonlyArray<number>) {}
+		public readonly extra: readonly number[]) {}
 }

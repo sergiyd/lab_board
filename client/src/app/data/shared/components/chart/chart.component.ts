@@ -15,9 +15,9 @@ export class ChartComponent implements OnInit, OnDestroy {
 	private _chart: Chart;
 	private _unsubscribe = new Subject();
 
-	private _datasets$: Observable<ReadonlyArray<ChartDataset>>;
+	private _datasets$: Observable<readonly ChartDataset[]>;
 	@Input()
-	public set datasets$(datasets: Observable<ReadonlyArray<ChartDataset>>) {
+	public set datasets$(datasets: Observable<readonly ChartDataset[]>) {
 		this._datasets$ = datasets;
 	}
 
@@ -74,7 +74,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 		this._unsubscribe.complete();
 	}
 
-	private get labels(): ReadonlyArray<string> {
+	private get labels(): readonly string[] {
 		return new Array(this._deepMs / this._stepMs)
 			.fill(0)
 			.map((v, i, a) => ((a.length * this._stepMs) - i * this._stepMs).toString());

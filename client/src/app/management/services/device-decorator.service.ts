@@ -6,7 +6,7 @@ import { DeviceType } from '../models/device-type.enum';
 
 export class DeviceDecoratorService {
 
-	public static readonly buses: ReadonlyArray<DeviceBus> = Object.keys(DeviceBus).map(k => Number(k)).filter(v => !isNaN(v));
+	public static readonly buses: readonly DeviceBus[] = Object.keys(DeviceBus).map(k => Number(k)).filter(v => !isNaN(v));
 
 	public static readonly busNames: ReadonlyMap<DeviceBus, string> = new Map([
 		[DeviceBus.Unknown, 'Unknown'],
@@ -18,7 +18,7 @@ export class DeviceDecoratorService {
 		[DeviceBus.ExtensionDeviceDigital, 'Ext. Digital']
 	]);
 
-	public static readonly types: ReadonlyArray<DeviceType> = Object.keys(DeviceType).map(k => Number(k)).filter(v => !isNaN(v));
+	public static readonly types: readonly DeviceType[] = Object.keys(DeviceType).map(k => Number(k)).filter(v => !isNaN(v));
 
 	public static readonly typeNames: ReadonlyMap<DeviceType, string> = new Map([
 		[DeviceType.Unknown, 'Unknown'],

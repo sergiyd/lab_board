@@ -58,7 +58,7 @@ export class LiveDataService extends BoardMessagingBaseService {
 		this.sendCommand(MonitoringCommands.SourceData, new Uint8Array([index]));
 	}
 
-	private sendPutExtra(index: number, extra: ReadonlyArray<number>): void {
+	private sendPutExtra(index: number, extra: readonly number[]): void {
 		this.sendCommand(MonitoringCommands.PutExtra, new Uint8Array([index, extra.length].concat(extra)));
 	}
 
@@ -144,7 +144,7 @@ export class LiveDataService extends BoardMessagingBaseService {
 		this.sendSourceData(index);
 	}
 
-	public putExtra(index: number, extra: ReadonlyArray<number>): void {
+	public putExtra(index: number, extra: readonly number[]): void {
 		this.sendPutExtra(index, extra);
 	}
 
