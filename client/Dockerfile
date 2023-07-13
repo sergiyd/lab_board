@@ -9,4 +9,3 @@ RUN npm i
 RUN npm run build
 ENV LAB_BOARD_URL=$LAB_BOARD_URL
 RUN chmod +x upload_dist.sh
-CMD /app-build/upload_dist.sh
