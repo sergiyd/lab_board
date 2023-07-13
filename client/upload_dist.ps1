@@ -12,7 +12,7 @@ foreach ($FileName in $FileNames) {
   $MultipartContent = [System.Net.Http.MultipartFormDataContent]::new()
   $MultipartContent.Add($FileContent)
   
-  Invoke-WebRequest -Body $MultipartContent -Method "POST" -Uri "$Env:LAB_BOARD_URL/upload"
+  Invoke-WebRequest -Body $MultipartContent -Method "POST" -Uri "$Env:LAB_BOARD_URL/files"
 
   $FileStream.Dispose()
   $FileContent.Dispose()

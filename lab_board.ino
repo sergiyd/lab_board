@@ -321,7 +321,7 @@ const PROGMEM char UploadHtml[] = "<!doctype html>"
                                   "</head>"
                                   "<body>"
                                   "<center>"
-                                  "<form method=\"POST\" enctype=\"multipart/form-data\">"
+                                  "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"/files\">"
                                   "<input type=\"file\" name=\"file\">"
                                   "<input type=\"submit\" value=\"Upload\">"
                                   "</form>"
@@ -1186,7 +1186,7 @@ void setupWebServer()
       });
 
   webServer.on(
-      "/upload", HTTP_POST, []()
+      "/files", HTTP_POST, []()
       { webServer.send(200); },
       handleWebServerUpload);
 
