@@ -10,11 +10,10 @@ arduino-cli lib install WebSockets
 Linux
 ```sh
 cd client
-LAB_BOARD_URL=http://<your board IP> ./upload_dist.sh
+LAB_BOARD_URL=http://<your board URL> ./upload_dist.sh
 ```
 or via Docker
 ```sh
-docker remove lab-board-admin-uploader
-docker build --build-arg LAB_BOARD_URL=<your board IP> -t lab-board-admin-uploader ./client
-docker run --name lab-board-admin-uploader lab-board-admin-uploader ./upload_dist.sh
+docker build -t lab-board-admin-uploader ./client
+docker run --rm -e LAB_BOARD_URL=<your board URL> -v ./client:/client lab-board-admin-uploader /client/build_upload.sh
 ```
